@@ -4,7 +4,7 @@
 
 # This has been built for Python 3x
 
-# So far, I have successfully gotten scraper.py and emailalert.py (not included in the public repo) up and running.
+# So far, I have successfully gotten scraper.py and emailalert.py up and running.
 
 # scraper.py downloads all of the .pdfs marked "4D" (could expand this to include "4C" with the right and/or in my if line).
 
