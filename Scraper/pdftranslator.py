@@ -12,7 +12,7 @@ def parsePdf(filename):
 
     with open(dataDir/filename, 'rb') as pdfFileObj:
         #The pdfReader variable is a readable object that will be parsed.
-        pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+        pdfReader = PyPDF2.PdfFileReader(pdfFileObj, strict=False)
 
     #Discerning the number of pages will allow us to parse through all the pages.
         num_pages = pdfReader.numPages
@@ -31,23 +31,28 @@ def parsePdf(filename):
     #If the above returns as False, we run the OCR library textract to #convert scanned/image based PDF files into text.
         else:
             text = textract.process(filename, method='tesseract', language='eng')
-    #Now we have a text variable that contains all the text derived from our PDF file. Type print(text) to see what it contains. It likely contains a lot of spaces, possibly junk such as '\n,' etc.
-    #Now, we will clean our text variable and return it as a list of keywords.
+    #Now we have a text variable that contains all the text derived from our PDF file.
 
     #The word_tokenize() function will break our text phrases into individual words.
         tokens = word_tokenize(text)
-    #We'll create a new list that contains punctuation we wish to clean.
-        punctuations = ['(',')',';',':','[',']',',']
-    #We initialize the stopwords variable, which is a list of words like "The," "I," "and," etc. that don't hold much value as keywords.
-        stop_words = stopwords.words('english')
-    #We create a list comprehension that only returns a list of words that are NOT IN stop_words and NOT IN punctuations.
-        keywords = [word for word in tokens if not word in stop_words and not word in punctuations]
-        interested_words = ['assault', 'battery', 'murder', 'test', 'document']
-        return [word for word in keywords if word in interested_words]
 
-for filename in os.listdir(r'/home/pi/Scraper/Output'):
-    if filename.endswith('.pdf'):
-        parsePdf(filename)
+    #We make a list of words we want to find in the document and create an empty list for comparison
+        interested_words = ['felonious', 'terroristic', 'battery', 'murder', 'rape', 'impersonating', 'document', 'test']
+        testList = []
+
+    #We compare the tokens and interested_words list and add any words that match to the testList to return
+        for x in tokens:
+            for y in interested_words:
+                if x.lower() == y:
+                    testList.append(x)
+
+        print(testList)
+        print(filename)
+        
 
 
+        return (testList)
 
+#for testing
+filename = "FCMC Arraignment Report 4D 2022-09-02.pdf?879897"
+parsePdf(filename)
