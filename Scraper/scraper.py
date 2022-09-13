@@ -7,8 +7,16 @@ from bs4 import BeautifulSoup
 def download_file(url):
 	# Creates a filename to write to; assumes we'll put the downloaded files in a folder called Output - make sure you create this folder first...
 	# The filename is the last bit of the URL
-	print("Download found! Let's smash " + url)	
+	print("Download found! Grabbing " + url)	
 	filename = 'Output/' + url.split('/')[-1]
+
+	size = len(filename)
+	filename = filename[:size -7]
+	print(filename)
+
+	size = len(url)
+	url= url[:size -7]
+	print(filename)
 
 	print("Downloading " + url + " to " + filename)
 
@@ -36,7 +44,7 @@ def search_pi():
 
 	print("Hunt complete!")
 
-print("Hello, World!")
+print("Hello, world!")
 print("Let's do some mad scraping")
 search_pi()
 print("Finished")
